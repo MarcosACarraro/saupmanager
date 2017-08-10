@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script>
+      
+
+        function postar() {
+
+            var item = {
+                CodProject: "1",
+                Description: "Legal", 
+                ETA:10,
+                Progress:10
+            };
+
+            $.ajax({
+                async: true,
+                cache: false,
+                url: "project",
+                type: "POST",
+                data: item,
+                datatype: "JSON",
+                success: function (response) {
+                    //alert(response.success);
+                },
+                error: function () {
+                    alert('Erro ao salvar!');
+                }
+            });
+        }
+
+        function _SetDateTime(strDateTime) {
+            var dateTime = null;
+            if (strDateTime.length > 0) {
+                dateTime = new Date(parseInt(strDateTime.substring(6, 10)), parseInt(strDateTime.substring(3, 5)) - 1, parseInt(strDateTime.substring(0, 2)));
+            }
+            return dateTime;
+        }
+
+        function get() {
+            
+            var dtConsulta = _SetDateTime("08/01/2017");
+            
+            $.ajax({
+                async: true,
+                cache: false,
+                url: "projects",
+                type: "GET",
+                data: {
+                    cmd: "Select",
+                    Description: "",
+                    skip: 0,
+                    take:1000
+                },
+                datatype: "JSON",
+                success: function (data, success) {
+                    if (success = "success") {
+                       
+                    }
+                },
+                error: function () {
+                    alert('Erro carregar registros!');
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <input type="button" value="postar" onclick="javascript: postar(); return false;"/>
+    <input type="button" value="listar" onclick="javascript: get(); return false;"/>
+</body>
+</html>
